@@ -1,0 +1,17 @@
+.nav-bar-style {
+    display: flex;
+    flex-direction: row;
+    background-color: #242424;
+}
+.link{
+    /*color:white;*/
+    padding-left:1em;
+    padding-right:1em;
+}
+
+.logo {
+    font-size: 2rem;
+    /*color: white;*/
+    padding-left: 1em;
+    padding-right: 1em;
+}
