@@ -8,7 +8,7 @@ import "./NavBar.css"
 const NavBar: FC = () => (
     <Navbar bg="dark" data-bs-theme="dark">
         <Container >
-            <Navbar.Brand href="#home" className="link"><strong>My Notes</strong></Navbar.Brand>
+            <Navbar.Brand href="home" className="link"><strong>My Notes</strong></Navbar.Brand>
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="me-auto">
                     <Nav.Link href="login" className="link">Login</Nav.Link>

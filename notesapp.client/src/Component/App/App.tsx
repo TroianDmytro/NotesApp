@@ -4,17 +4,17 @@ import './App.css';
 import LoginForm from '../../Pages/LoginForm/LoginForm';
 import RegistrForm from '../../Pages/RegistrForm/RegistrForm';
 import NotesPage from '../../Pages/NotesPage/NotesPage';
+import HomePage from '../../Pages/HomePage/HomePage';
 
 // Компоненты страниц
-const Home = () => <h2>Home Page</h2>;
-
 const App: React.FC = () => {
     return (
         <div>
             <Router >
                 <NavBar />
                 <Routes>
-                    <Route path="/" element={<Home />} />
+                    <Route path="/" element={<HomePage />} />
+                    <Route path="/home" element={<HomePage />} />
                     <Route path="/login" element={<LoginForm />} />
                     <Route path="/registr" element={<RegistrForm />} />
                     <Route path="/notes" element={<NotesPage />} />

@@ -7,7 +7,7 @@ import Col from 'react-bootstrap/esm/Col';
 import Note from '../../Component/Note/Note';
 
 
-const NotesPage: FC = () => (
+const NotesPage: FC = () => (localStorage.getItem('token') &&
     <NotesPageWrapper>
         <Container>
             <Row>
