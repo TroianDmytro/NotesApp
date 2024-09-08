@@ -1,7 +1,9 @@
 import { FC, useState } from 'react';
 import Button from 'react-bootstrap/esm/Button';
 import Form from 'react-bootstrap/esm/Form';
-
+import "./AddNoteStyle.css";
+import { v4 as uuidv4 } from 'uuid';
+import axios from 'axios';
 
 const AddNote: FC = () => {
     const [title, setTitle] = useState<string>('');
@@ -20,24 +22,64 @@ const AddNote: FC = () => {
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-
+        
         if (title && description) {
             setStatusSave("Not save note");
-
         }
 
-        //https://localhost:7299/Notes
+        const note = { NoteId: "", Title: title, Description: description, UserId: "" };
+        note.NoteId = uuidv4();
+        console.log(note.NoteId);
 
+        const token = localStorage.getItem('token');
 
+        if (token) {
+            try {
+                const base64Url = token.split('.')[1]; // Получаем вторую часть токена (payload)
+                const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/'); // Преобразование URL безопасной строки Base64
+                const jsonPayload = decodeURIComponent(
+                    atob(base64)
+                        .split('')
+                        .map(function (c) {
+                            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+                        })
+                        .join('')
+                );
+
+                const decodedToken = JSON.parse(jsonPayload); // Парсим JSON
+                console.log('Decoded Token:', decodedToken);
+
+                const userId = decodedToken.sub; // Ищем userId или sub
+                note.UserId = userId;
+                console.log('User ID:', userId);
+            } catch (error) {
+                console.error('Error decoding token:', error);
+            }
+        }
+
+        try {
+            axios.post("https://localhost:7299/Notes", note, {
+                headers: {
+                    'Authorization': `Bearer ${token}` // Добавляем токен в заголовок
+                }
+            }).then((response) => {
+                console.log(response);
+                localStorage.setItem("token", response.data.token);
+            }).catch((e) => console.log(e));
+        }
+        catch (e) {
+            console.log(e);
+        }
 
         setStatusSave("Save note.");
-
+        setTitle('');
+        setDescription('');
     }
 
 
     return (
         <>
-            <div id="status-note" className="status-note-style">{statusSave}</div>
+            <div className="status-note-style">{statusSave}</div>
             <Form className="width-form" onSubmit={handleSubmit} >
                 <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                     <Form.Label>Title</Form.Label>
