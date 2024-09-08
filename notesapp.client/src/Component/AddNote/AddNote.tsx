@@ -62,8 +62,8 @@ const AddNote: FC = () => {
 
             </Form>
         </>
-}
-   
-);
+
+    )
+};
 
 export default AddNote;
