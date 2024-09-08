@@ -12,7 +12,7 @@ using NotesApp.Server.Models;
 namespace NotesApp.Server.Migrations
 {
     [DbContext(typeof(NotesAppContext))]
-    [Migration("20240905082212_InitMigration")]
+    [Migration("20240908143535_InitMigration")]
     partial class InitMigration
     {
         /// <inheritdoc />
