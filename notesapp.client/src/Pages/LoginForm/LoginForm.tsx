@@ -2,15 +2,16 @@ import { FC, useState } from 'react';
 import Form from 'react-bootstrap/esm/Form';
 import Button from 'react-bootstrap/esm/Button';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+//import { useNavigate } from 'react-router-dom';
 
+interface LoginFormProps {
+    onReloadNavBar: () => void;
+}
 
-const LoginForm: FC = () => {
+const LoginForm: FC<LoginFormProps> = ({ onReloadNavBar }) => {
     const [login, setLogin] = useState<string>('');
     const [pass, setPass] = useState<string>('');
     const [status, setStatus] = useState("");
-
-    const navigate = useNavigate();
 
     const handleChangeLogin = (event: React.ChangeEvent<HTMLInputElement>) => {
         setLogin(event.target.value);
@@ -38,7 +39,13 @@ const LoginForm: FC = () => {
         }
 
         setStatus("You autoritheit.");
-        navigate('/notes');
+        setTimeout(onReloadNavBar, 1000);
+
+
+        const handleRedirect = () => {
+            window.location.href = '/notes'; // Перезагрузка страницы и переход на другой маршрут
+        };
+        setTimeout(handleRedirect,1000);
     }
 
     return (

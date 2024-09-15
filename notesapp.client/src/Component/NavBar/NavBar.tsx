@@ -1,13 +1,23 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import Navbar from 'react-bootstrap/esm/Navbar';
 import Container from 'react-bootstrap/esm/Container';
 import Nav from 'react-bootstrap/esm/Nav';
 import "./NavBar.css"
-//interface NavBarProps {}
+interface NavBarProps {
+    reload: boolean
+}
 
-const NavBar: FC = () => {
+const NavBar: FC<NavBarProps> = ({ reload }) => {
+    let tokenExist = localStorage.getItem("token") !== null;
 
-    const tokenExist = localStorage.getItem('token') !== null;
+    useEffect(() => {
+        function handleT() {
+            tokenExist = localStorage.getItem("token") !== null;
+        }
+
+        handleT();
+        
+    }, [reload]);
     
     return (
         <Navbar bg="dark" data-bs-theme="dark">

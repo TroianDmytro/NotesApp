@@ -6,6 +6,7 @@ namespace NotesApp.Server.Models
     {
         [Key]
         public Guid NoteId { get; set; }
+        public DateTime CreatedAt { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
         public Guid UserId { get; set; }

@@ -39,15 +39,27 @@ namespace NotesApp.Server.Controllers
                 return BadRequest("Note is null");
             }
 
-            // Присваиваем новый идентификатор для заметки
-            //note.NoteId = Guid.NewGuid();
-            //note.UserId = Guid.Parse(userId);
-
             await _context.Notes.AddAsync(note);
             await _context.SaveChangesAsync();
             return Ok("Added note.");
         }
 
+        [HttpPut]
+        public async Task<IActionResult> UpdateNote([FromBody] Notes note)
+        {
+            _context.Notes.Update(note);
+            await _context.SaveChangesAsync();
+            return Ok("Note update.");
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(string id)
+        {
+            Guid guidId= new Guid(id);
+            await _context.Notes.Where(n=>n.NoteId==guidId).ExecuteDeleteAsync();
+            await _context.SaveChangesAsync();
+            return Ok();
+        }
 
     }
 }

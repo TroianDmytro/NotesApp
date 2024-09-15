@@ -5,6 +5,7 @@ import Container from 'react-bootstrap/esm/Container';
 import Row from 'react-bootstrap/esm/Row';
 import Col from 'react-bootstrap/esm/Col';
 import NotesList from '../../Component/NotesList/NotesList';
+//import { useLocation } from 'react-router-dom';
 
 
 const NotesPage: FC = () => {
@@ -12,6 +13,7 @@ const NotesPage: FC = () => {
     const [reloadNotes, setReloadNotes] = useState(false);
 
     const triggerReloadNotes = () => {
+        //setTimeout(() => window.location.reload(), 1000);
         setReloadNotes(!reloadNotes); // Инвертируем значение, чтобы вызвать повторный рендер и обновление списка
     };
 

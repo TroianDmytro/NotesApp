@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NotesApp.Server.Models;
 
@@ -11,9 +12,11 @@ using NotesApp.Server.Models;
 namespace NotesApp.Server.Migrations
 {
     [DbContext(typeof(NotesAppContext))]
-    partial class NotesAppContextModelSnapshot : ModelSnapshot
+    [Migration("20240915194638_AddDateTimeInNotes")]
+    partial class AddDateTimeInNotes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

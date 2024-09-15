@@ -2,7 +2,7 @@ import { FC, useEffect, useState, } from 'react';
 import { NotesListWrapper } from './NotesList.styled';
 import axios from 'axios';
 import Note from '../Note/Note';
-
+import { format } from 'date-fns';
 interface NotesListProps {
     reload: boolean
 }
@@ -38,10 +38,18 @@ const NotesList: FC<NotesListProps> = ({ reload }) => {
         handleLoad();
     }, [reload]);
 
+    function dateString( date: Date ) {
+        const currentDate: Date = date;
+        const formattedDate: string = format(currentDate, 'dd/MM/yyyy HH:mm');
+        console.log("formDate", formattedDate);
+        return formattedDate;
+    }
+    
+
     return (
         <NotesListWrapper >
-            {listNote?.map(function (item: { title: string; description: string; }, i) {
-                return <Note key={i} title={item.title} description={item.description}></Note>;
+            {listNote?.map(function (item: { noteId: string, createdAt: Date; title: string; description: string; }, i) {
+                return <Note key={i} id={item.noteId} dateNotes={dateString(item.createdAt)} title={item.title} description={item.description}></Note>;
             })}
         </NotesListWrapper>
     );
