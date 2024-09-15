@@ -4,11 +4,16 @@ import AddNote from '../../Component/AddNote/AddNote';
 import Container from 'react-bootstrap/esm/Container';
 import Row from 'react-bootstrap/esm/Row';
 import Col from 'react-bootstrap/esm/Col';
-import Note from '../../Component/Note/Note';
+import NotesList from '../../Component/NotesList/NotesList';
 
 
 const NotesPage: FC = () => {
     const [token, setToken] = useState<string | null>(localStorage.getItem("token"));
+    const [reloadNotes, setReloadNotes] = useState(false);
+
+    const triggerReloadNotes = () => {
+        setReloadNotes(!reloadNotes); // Инвертируем значение, чтобы вызвать повторный рендер и обновление списка
+    };
 
     useEffect(() => {
         // Функция для проверки и установки токена
@@ -38,23 +43,26 @@ const NotesPage: FC = () => {
             // Например, вы можете делать запросы с токеном или изменять состояние
         }
     }, [token]); // Этот `useEffect` сработает, когда `token` изменится
+    const tokenExist = token !== null;
+    console.log("tokenExist", tokenExist);
 
+    return <>
+        {tokenExist &&
+            <NotesPageWrapper>
+                <Container>
+                    <Row>
+                        <Col xs={6} md={4}>
+                            <AddNote onAddNote={triggerReloadNotes} />
+                        </Col>
+                        <Col xs={12} md={8} >
+                            <NotesList reload={reloadNotes} />
+                        </Col>
+                    </Row>
 
-    return (token &&
-        <NotesPageWrapper>
-            <Container>
-                <Row>
-                    <Col xs={6} md={4}>
-                        <AddNote />
-                    </Col>
-                    <Col xs={12} md={8} >
-                        <Note />
-                    </Col>
-                </Row>
-
-            </Container>
-        </NotesPageWrapper>
-    );
+                </Container>
+            </NotesPageWrapper>
+        }
+    </>;
 }
 
 export default NotesPage;

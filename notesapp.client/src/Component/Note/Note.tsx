@@ -1,16 +1,20 @@
-import  { FC } from 'react';
+import { FC } from 'react';
 import Button from 'react-bootstrap/esm/Button';
 import Card from 'react-bootstrap/esm/Card';
 import "./NoteStyles.css"
 
+interface NoteProps {
+    title: string,
+    description:string
+}
 
-const Note: FC = () => (
+const Note: FC<NoteProps> = ({ title, description }) => (
     <Card className="note">
         <Card.Header>Featured</Card.Header>
         <Card.Body>
-            <Card.Title>Special title treatment</Card.Title>
+            <Card.Title>{ title}</Card.Title>
             <Card.Text>
-                With supporting text below as a natural lead-in to additional content.
+                {description}
             </Card.Text>
             <Button variant="danger">Go somewhere</Button>
         </Card.Body>

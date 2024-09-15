@@ -4,7 +4,6 @@ import Button from 'react-bootstrap/esm/Button';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-//interface LoginFormProps {}
 
 const LoginForm: FC = () => {
     const [login, setLogin] = useState<string>('');
@@ -40,7 +39,6 @@ const LoginForm: FC = () => {
 
         setStatus("You autoritheit.");
         navigate('/notes');
-        
     }
 
     return (

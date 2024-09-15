@@ -5,7 +5,12 @@ import "./AddNoteStyle.css";
 import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
 
-const AddNote: FC = () => {
+interface AddNoteProps {
+    onAddNote: () => void
+}
+
+
+const AddNote: FC<AddNoteProps> = ({ onAddNote }) => {
     const [title, setTitle] = useState<string>('');
     const [description, setDescription] = useState<string>('');
     const [statusSave, setStatusSave] = useState<string>("");
@@ -23,8 +28,9 @@ const AddNote: FC = () => {
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         
-        if (title && description) {
+        if (title==="" || description==="") {
             setStatusSave("Not save note");
+            return;
         }
 
         const note = { NoteId: "", Title: title, Description: description, UserId: "" };
@@ -58,22 +64,27 @@ const AddNote: FC = () => {
         }
 
         try {
-            axios.post("https://localhost:7299/Notes", note, {
+            axios.post("https://localhost:7299/Notes/", note, {
                 headers: {
                     'Authorization': `Bearer ${token}` // Добавляем токен в заголовок
                 }
             }).then((response) => {
                 console.log(response);
-                localStorage.setItem("token", response.data.token);
             }).catch((e) => console.log(e));
+            // Перезагружаем компонент
+            setTimeout(onAddNote, 1000);
+            console.log("setTimeout(onAddNote, 1000);");
+            
         }
         catch (e) {
             console.log(e);
         }
 
-        setStatusSave("Save note.");
         setTitle('');
         setDescription('');
+       
+        setStatusSave("Save note.");
+       
     }
 
 

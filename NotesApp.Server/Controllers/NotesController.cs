@@ -20,7 +20,7 @@ namespace NotesApp.Server.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllNotes()
         {
-            var userId = User.FindFirst(JwtRegisteredClaimNames.Sub)?.Value;
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             var listNotes = await _context.Notes.Where(n=>n.UserId.ToString().Equals(userId)).ToListAsync();
             return Ok(listNotes);
